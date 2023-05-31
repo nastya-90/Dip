@@ -42,6 +42,11 @@ const RoomSchema = mongoose.Schema(
                 require: [true, "Please type a number of beds"],
                 default: 2,
             },
+            room: {
+                type: Number,
+                require: [true, "Please number of rooms in the room"],
+                default: 1,
+            },
             area: {
                 type: Number,
                 require: [true, "Please type an area"],
@@ -51,11 +56,6 @@ const RoomSchema = mongoose.Schema(
                 type: Number,
                 require: [true, "Please type an amount of guests"],
                 default: 2,
-            },
-            safe: {
-                type: Boolean,
-                require: [true, "Please type a safe status"],
-                default: false,
             },
             addition: {
                 type: String,

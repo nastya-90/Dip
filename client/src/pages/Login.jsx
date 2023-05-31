@@ -3,7 +3,9 @@ import { FaUser } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { login, reset } from "../features/authSlice";
+import { login, reset } from "../features/auth/authSlice";
+import Button from "../Components/Button/Button";
+import style from "./auth.module.css";
 
 function Login() {
     const [formData, setFormData] = useState({
@@ -16,7 +18,7 @@ function Login() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const { user, isLoading, isError, isSuccess, message } = useSelector(
+    const { user, isError, isSuccess, message } = useSelector(
         (state) => state.auth
     );
 
@@ -54,7 +56,7 @@ function Login() {
 
     return (
         <>
-            <section className="heading">
+            <section className={style.heading}>
                 <h1>
                     <FaUser /> Login
                 </h1>
@@ -62,10 +64,10 @@ function Login() {
             </section>
             <section className="form">
                 <form onSubmit={handleFormSubmit}>
-                    <div className="form-group">
+                    <div className={style.form_group}>
                         <input
                             type="email"
-                            className="form-input"
+                            className={style.form_control}
                             id="email"
                             name="email"
                             value={email}
@@ -74,10 +76,10 @@ function Login() {
                         />
                     </div>
 
-                    <div className="form-group">
+                    <div className={style.form_group}>
                         <input
                             type="password"
-                            className="form-input"
+                            className={style.form_control}
                             id="password"
                             name="password"
                             value={password}
@@ -86,8 +88,8 @@ function Login() {
                         />
                     </div>
 
-                    <div className="form-group">
-                        <button type="submit">Login</button>
+                    <div className={style.form_group}>
+                        <Button type="submit" class="block" text="Login" />
                     </div>
                 </form>
             </section>

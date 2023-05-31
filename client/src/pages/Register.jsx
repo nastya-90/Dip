@@ -3,7 +3,10 @@ import { FaUser } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { register, reset } from "../features/authSlice";
+import { register, reset } from "../features/auth/authSlice";
+import Button from "../Components/Button/Button";
+
+import style from "./auth.module.css";
 
 function Register() {
     const [formData, setFormData] = useState({
@@ -18,7 +21,7 @@ function Register() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const { user, isLoading, isError, isSuccess, message } = useSelector(
+    const { user, isError, isSuccess, message } = useSelector(
         (state) => state.auth
     );
 
@@ -59,26 +62,20 @@ function Register() {
         }
     }
 
-    // if(isLoading){
-    //     return (
-
-    //     )
-    // }
-
     return (
         <>
-            <section className="heading">
+            <section className={style.heading}>
                 <h1>
                     <FaUser /> Register
                 </h1>
                 <p>Create an account</p>
             </section>
-            <section className="form">
+            <section className={style.form}>
                 <form onSubmit={handleFormSubmit}>
-                    <div className="form-group">
+                    <div className={style.form_group}>
                         <input
                             type="text"
-                            className="form-input"
+                            className={style.form_control}
                             id="name"
                             name="name"
                             value={name}
@@ -87,10 +84,10 @@ function Register() {
                         />
                     </div>
 
-                    <div className="form-group">
+                    <div className={style.form_group}>
                         <input
                             type="email"
-                            className="form-input"
+                            className={style.form_control}
                             id="email"
                             name="email"
                             value={email}
@@ -99,10 +96,10 @@ function Register() {
                         />
                     </div>
 
-                    <div className="form-group">
+                    <div className={style.form_group}>
                         <input
                             type="password"
-                            className="form-input"
+                            className={style.form_control}
                             id="password"
                             name="password"
                             value={password}
@@ -111,10 +108,10 @@ function Register() {
                         />
                     </div>
 
-                    <div className="form-group">
+                    <div className={style.form_group}>
                         <input
                             type="password"
-                            className="form-input"
+                            className={style.form_control}
                             id="password2"
                             name="password2"
                             value={password2}
@@ -123,8 +120,8 @@ function Register() {
                         />
                     </div>
 
-                    <div className="form-group">
-                        <button type="submit">Register</button>
+                    <div className={style.form_group}>
+                        <Button type="submit" class="block" text="Register" />
                     </div>
                 </form>
             </section>
