@@ -31,16 +31,19 @@ export default function Header() {
 
             <ul>
                 <li>
-                    <Link>All rooms</Link>
+                    <Link to="/">All rooms</Link>
                 </li>
 
                 <li>
                     <Link>My rooms</Link>
                 </li>
 
-                <li>
-                    <Link></Link>
-                </li>
+                {localStorage.getItem("user") !== null &&
+                    JSON.parse(localStorage.getItem("user")).admin === true && (
+                        <li>
+                            <Link to="/admin">Admin</Link>
+                        </li>
+                    )}
             </ul>
 
             <ul>

@@ -2,25 +2,41 @@ import axios from "axios";
 
 const API_URI = "/api/rooms/";
 
-//Create room
-const createRoom = async (roomData, token) => {
+const getRooms = async () => {
+    const { data: res } = await axios.get(API_URI);
+    return res.array;
+};
+
+const getAdminRooms = async (token) => {
     const config = {
         headers: {
-            Authorization: `Bearer ${token}`,
+            authorization: `Bearer ${token}`,
         },
     };
 
-    const { data: res } = await axios.post(
-        API_URI + "create",
-        roomData,
-        config
-    );
+    const { data: res } = await axios.get(API_URI + "getAdmin", config);
 
-    return res;
+    return res.array;
+};
+
+const getRoom = async (token, id) => {
+    const config = {
+        headers: {
+            authorization: `Bearer ${token}`,
+        },
+    };
+
+    const { data: res } = await axios.get(API_URI + `${id}`, config);
+
+    console.log(res.item);
+
+    return res.item;
 };
 
 const roomService = {
-    createRoom,
+    getRooms,
+    getAdminRooms,
+    getRoom,
 };
 
 export default roomService;

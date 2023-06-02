@@ -35,3 +35,65 @@
     display: block;
     margin: 0 0 5px 3px;
 }
+
+.content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.gridList {
+    width: fit-content;
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+}
+
+.gridListAdmin {
+    width: fit-content;
+
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 45px;
+}
+
+.loadingContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    height: 100px;
+
+    margin-top: 30vh;
+}
+
+.loading {
+    width: 80px;
+    height: 80px;
+
+    border: 10px solid rgb(178, 178, 254);
+    border-radius: 50%;
+
+    animation-duration: 0.7s;
+    animation-name: loading;
+    animation-iteration-count: infinite;
+}
+
+@keyframes loading {
+    0% {
+        width: 80px;
+        height: 80px;
+    }
+    50% {
+        width: 20px;
+        height: 20px;
+    }
+    100% {
+        width: 80px;
+        height: 80px;
+    }
+}

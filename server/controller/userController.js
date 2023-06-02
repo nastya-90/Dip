@@ -8,7 +8,7 @@ const User = require("../models/User");
 // @access - Public
 
 const registerUser = asyncHandler(async (req, res) => {
-    const { name, email, password } = req.body;
+    const { name, email, password, check } = req.body;
 
     //Check inputs data
     if (!name || !email || !password) {
@@ -35,6 +35,7 @@ const registerUser = asyncHandler(async (req, res) => {
         name,
         email,
         password: hashedPassword,
+        isAdmin: check,
     });
 
     if (user) {
@@ -42,6 +43,7 @@ const registerUser = asyncHandler(async (req, res) => {
             _id: user._id,
             name: user.name,
             email: user.email,
+            admin: user.isAdmin,
             token: generateToken(user._id),
         });
     } else {
@@ -67,6 +69,7 @@ const loginUser = asyncHandler(async (req, res) => {
             _id: user._id,
             name: user.name,
             email: user.email,
+            admin: user.isAdmin,
             token: generateToken(user._id),
         });
     } else {

@@ -1,22 +1,65 @@
 const asyncHandler = require("express-async-handler");
 const Room = require("../models/Rooms");
 
-// @desc - Get user
-// @route - GET /api/users/data
-// @access - Private
+// @desc - Get all available rooms
+// @route - GET /api/rooms/
+// @access - Public
+const getAvailableRooms = asyncHandler(async (req, res) => {
+    let rooms = await Room.find({});
+    rooms = rooms.filter((el) => !el.reserve.status);
 
-const getData = asyncHandler(async (req, res) => {
-    const { _id, name, email } = await User.findById(req.user.id);
+    for (let item of rooms) {
+        item.photo = `./assets/${item.photo}.jpg`;
+    }
 
-    res.status(201).json({
-        _id: _id,
-        name: name,
-        email: email,
+    return res.status(200).send({
+        array: rooms,
     });
 });
 
+// @desc - Get all available rooms
+// @route - GET /api/rooms/
+// @access - Public
+const getAllRooms = asyncHandler(async (req, res) => {
+    let rooms = await Room.find({});
+
+    for (let item of rooms) {
+        item.photo = `./assets/${item.photo}.jpg`;
+    }
+
+    return res.status(200).send({
+        array: rooms,
+    });
+});
+
+// @desc - Get all available rooms
+// @route - GET /api/rooms/
+// @access - Public
+const getRoom = asyncHandler(async (req, res) => {
+    try {
+        let room = await Room.findById(req.params.id);
+        room.photo = `./assets/${room.photo}.jpg`;
+
+        return res.status(200).send({
+            item: room,
+        });
+    } catch (error) {
+        console.log(error);
+    }
+});
+
+// @desc - Rent available room
+// @route - GET /api/rooms/rent?id=id
+// @access - Private
+const RentRoom = asyncHandler(async (req, res) => {});
+
+// @desc - Get user
+// @route - GET /api/rooms/unrent?id=id
+// @access - Private
+const UnrentRoom = asyncHandler(async (req, res) => {});
+
 module.exports = {
-    registerUser,
-    loginUser,
-    getData,
+    getAvailableRooms,
+    getAllRooms,
+    getRoom,
 };

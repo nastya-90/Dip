@@ -1,0 +1,26 @@
+.roomStatus {
+    width: 150px;
+    height: 150px;
+
+    border-radius: 20px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.free {
+    background-color: rgba(195, 255, 195, 0.425);
+    border: 2px solid rgba(195, 255, 195, 1);
+}
+
+.reserve {
+    background-color: rgba(255, 199, 197, 0.425);
+    border: 2px solid rgba(255, 199, 197, 1);
+}
+
+.roomStatus p {
+    font-size: 20px;
+    font-weight: 700;
+}

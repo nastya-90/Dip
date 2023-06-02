@@ -14,9 +14,10 @@ function Register() {
         email: "",
         password: "",
         password2: "",
+        check: false,
     });
 
-    const { name, email, password, password2 } = formData;
+    const { name, email, password, password2, check } = formData;
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -37,12 +38,13 @@ function Register() {
         dispatch(reset());
     }, [user, isError, isSuccess, message, navigate, dispatch]);
 
-    function handleInputChange(event) {
-        event.preventDefault();
-
-        setFormData((prev) => ({
+    async function handleInputChange(event) {
+        await setFormData((prev) => ({
             ...prev,
-            [event.target.name]: event.target.value,
+            [event.target.name]:
+                event.target.name === "check"
+                    ? event.target.checked
+                    : event.target.value,
         }));
     }
 
@@ -56,6 +58,7 @@ function Register() {
                 name,
                 email,
                 password,
+                check,
             };
 
             dispatch(register(userData));
@@ -118,6 +121,29 @@ function Register() {
                             placeholder="Confirm a password"
                             onChange={handleInputChange}
                         />
+                    </div>
+
+                    <div className={style.form_group}>
+                        <input
+                            type="checkbox"
+                            style={{
+                                display: "inline-block",
+                                width: "fit-content",
+                            }}
+                            id="check"
+                            name="check"
+                            checked={check}
+                            onChange={handleInputChange}
+                        />
+                        <label
+                            htmlFor="check"
+                            style={{
+                                display: "inline-block",
+                                paddingLeft: 15,
+                            }}
+                        >
+                            Is admin account?
+                        </label>
                     </div>
 
                     <div className={style.form_group}>

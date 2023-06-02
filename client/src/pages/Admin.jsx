@@ -1,13 +1,14 @@
 import { useEffect } from "react";
-import style from "./auth.module.css";
-import { getRooms, reset } from "../features/rooms/roomsSlice";
-import { toast } from "react-toastify";
+import Status from "../Components/Status/status";
 import { useSelector, useDispatch } from "react-redux";
-import Room from "../Components/Room/Room";
+import { getAdminRooms, reset } from "../features/rooms/roomsSlice";
+import { toast } from "react-toastify";
+import style from "./auth.module.css";
 
-function Dashboard() {
+function AdminPage() {
     const dispatch = useDispatch();
-    const { rooms, isError, message, isLoading } = useSelector(
+
+    const { allRooms, isError, message, isLoading } = useSelector(
         (state) => state.rooms
     );
 
@@ -15,7 +16,7 @@ function Dashboard() {
         if (isError) {
             toast.error(message);
         }
-        dispatch(getRooms());
+        dispatch(getAdminRooms());
 
         return () => {
             dispatch(reset());
@@ -33,13 +34,13 @@ function Dashboard() {
     return (
         <>
             <section className={style.heading}>
-                <h1>Rooms dashboard</h1>
+                <h1>Admin dashboard</h1>
             </section>
             <section className={style.content}>
-                {rooms.length > 0 ? (
-                    <ul className={style.gridList}>
-                        {rooms.map((room) => (
-                            <Room key={room._id} room={room} />
+                {allRooms.length > 0 ? (
+                    <ul className={style.gridListAdmin}>
+                        {allRooms.map((room) => (
+                            <Status key={room._id} room={room} />
                         ))}
                     </ul>
                 ) : (
@@ -50,4 +51,4 @@ function Dashboard() {
     );
 }
 
-export default Dashboard;
+export default AdminPage;

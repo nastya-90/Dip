@@ -32,15 +32,15 @@ const RoomSchema = mongoose.Schema(
                 default: null,
             },
         },
-        // photo: {
-        //     type: ,
-        //     require: [true, "Please type a number"]
-        // },
+        photo: {
+            type: String,
+            require: true,
+        },
         info: {
             beds: {
-                type: Number,
+                type: String,
                 require: [true, "Please type a number of beds"],
-                default: 2,
+                default: "Две одноместные кровати",
             },
             room: {
                 type: Number,
