@@ -4,12 +4,17 @@ import { getRooms, reset } from "../features/rooms/roomsSlice";
 import { toast } from "react-toastify";
 import { useSelector, useDispatch } from "react-redux";
 import Room from "../Components/Room/Room";
+import { useState } from "react";
+import Pagination from "../Components/Pagination/paginate";
 
 function Dashboard() {
     const dispatch = useDispatch();
     const { rooms, isError, message, isLoading } = useSelector(
         (state) => state.rooms
     );
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const [elementPerPage, setElementPerPage] = useState(6);
 
     useEffect(() => {
         if (isError) {
@@ -30,6 +35,17 @@ function Dashboard() {
         );
     }
 
+    const getCurrentData = () => {
+        return rooms.slice(
+            currentPage * elementPerPage - elementPerPage,
+            currentPage * elementPerPage
+        );
+    };
+
+    const paginateData = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
+
     return (
         <>
             <section className={style.heading}>
@@ -37,11 +53,18 @@ function Dashboard() {
             </section>
             <section className={style.content}>
                 {rooms.length > 0 ? (
-                    <ul className={style.gridList}>
-                        {rooms.map((room) => (
-                            <Room key={room._id} room={room} />
-                        ))}
-                    </ul>
+                    <div>
+                        <ul className={style.gridList}>
+                            {getCurrentData().map((room) => (
+                                <Room key={room._id} room={room} />
+                            ))}
+                        </ul>
+                        <Pagination
+                            tableRowsPerPage={elementPerPage}
+                            totalData={rooms.length}
+                            paginateData={paginateData}
+                        />
+                    </div>
                 ) : (
                     <h1>No rooms yet!</h1>
                 )}

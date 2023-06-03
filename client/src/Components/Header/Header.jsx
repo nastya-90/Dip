@@ -35,7 +35,7 @@ export default function Header() {
                 </li>
 
                 <li>
-                    <Link>My rooms</Link>
+                    <Link to="/my">My rooms</Link>
                 </li>
 
                 {localStorage.getItem("user") !== null &&

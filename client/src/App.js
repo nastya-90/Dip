@@ -5,6 +5,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import AdminPage from "./pages/Admin";
 import RoomInfo from "./pages/RoomInfo";
+import MyRooms from "./pages/MyRooms";
 
 import Header from "./Components/Header/Header";
 
@@ -30,6 +31,11 @@ function App() {
                                     exact
                                     element={<RoomInfo />}
                                 />
+                            )}
+
+                        {localStorage.getItem("user") !== null &&
+                            JSON.parse(localStorage.getItem("user")).token && (
+                                <Route path="/my" exact element={<MyRooms />} />
                             )}
 
                         {localStorage.getItem("user") !== null &&

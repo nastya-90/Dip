@@ -6,14 +6,15 @@ import { toast } from "react-toastify";
 import { login, reset } from "../features/auth/authSlice";
 import Button from "../Components/Button/Button";
 import style from "./auth.module.css";
+import useInput from "../Hooks/useInput";
 
 function Login() {
-    const [formData, setFormData] = useState({
+    const data = useInput({
         email: "",
         password: "",
     });
 
-    const { email, password } = formData;
+    const { email, password } = data.formData;
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -33,15 +34,6 @@ function Login() {
 
         dispatch(reset());
     }, [user, isError, isSuccess, message, navigate, dispatch]);
-
-    function handleInputChange(event) {
-        event.preventDefault();
-
-        setFormData((prev) => ({
-            ...prev,
-            [event.target.name]: event.target.value,
-        }));
-    }
 
     function handleFormSubmit(event) {
         event.preventDefault();
@@ -72,7 +64,7 @@ function Login() {
                             name="email"
                             value={email}
                             placeholder="Please enter an email"
-                            onChange={handleInputChange}
+                            onChange={data.handleInputChange}
                         />
                     </div>
 
@@ -84,7 +76,7 @@ function Login() {
                             name="password"
                             value={password}
                             placeholder="Please enter a password"
-                            onChange={handleInputChange}
+                            onChange={data.handleInputChange}
                         />
                     </div>
 

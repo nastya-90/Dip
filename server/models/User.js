@@ -18,6 +18,12 @@ const UserSchema = mongoose.Schema(
             type: Boolean,
             default: false,
         },
+        rooms: [
+            {
+                type: mongoose.SchemaTypes.ObjectId,
+                ref: "Room",
+            },
+        ],
     },
     {
         timestamps: true,

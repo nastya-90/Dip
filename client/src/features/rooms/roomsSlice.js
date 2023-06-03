@@ -4,6 +4,7 @@ import roomService from "./roomsService";
 const initialState = {
     rooms: [],
     allRooms: [],
+    myRooms: [],
     room: null,
     isError: false,
     isSuccess: false,
@@ -27,7 +28,28 @@ export const getRooms = createAsyncThunk("room/user", async (_, thunkAPI) => {
     }
 });
 
-// Get all rooms
+// Get my rooms
+export const getMyRooms = createAsyncThunk(
+    "room/myroom",
+    async (_, thunkAPI) => {
+        try {
+            return await roomService.getMyRooms(
+                JSON.parse(localStorage.getItem("user")).token
+            );
+        } catch (error) {
+            const message =
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.String();
+
+            return thunkAPI.rejectWithValue(message);
+        }
+    }
+);
+
+// Get all rooms status by admin
 export const getAdminRooms = createAsyncThunk(
     "room/admin",
     async (_, thunkAPI) => {
@@ -111,6 +133,19 @@ export const roomSlice = createSlice({
                 state.room = action.payload;
             })
             .addCase(getRoom.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.message = action.payload;
+            })
+            .addCase(getMyRooms.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(getMyRooms.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = true;
+                state.myRooms = action.payload;
+            })
+            .addCase(getMyRooms.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isError = true;
                 state.message = action.payload;
